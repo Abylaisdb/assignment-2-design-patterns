@@ -1,0 +1,70 @@
+@startuml
+
+interface Button {
+    + paint(): void
+}
+
+interface Checkbox {
+    + paint(): void
+}
+
+class WindowsButton {
+    + paint(): void
+}
+
+class WindowsCheckbox {
+    + paint(): void
+}
+
+class MacOSButton {
+    + paint(): void
+}
+
+class MacOSCheckbox {
+    + paint(): void
+}
+
+interface GUIFactory {
+    + createButton(): Button
+    + createCheckbox(): Checkbox
+}
+
+class WindowsFactory {
+    + createButton(): Button
+    + createCheckbox(): Checkbox
+}
+
+class MacOSFactory {
+    + createButton(): Button
+    + createCheckbox(): Checkbox
+}
+
+abstract class Logistics {
+    # {abstract} createTransport(): Transport
+    + planDelivery(cargo: String, destination: String): void
+}
+
+class DeliveryApplication {
+    - guiFactory: GUIFactory
+    - logistics: Logistics
+    + DeliveryApplication(guiFactory: GUIFactory, logistics: Logistics)
+    + run(cargo: String, destination: String): void
+}
+
+Button <|.. WindowsButton
+Button <|.. MacOSButton
+Checkbox <|.. WindowsCheckbox
+Checkbox <|.. MacOSCheckbox
+
+GUIFactory <|.. WindowsFactory
+GUIFactory <|.. MacOSFactory
+
+WindowsFactory ..> WindowsButton
+WindowsFactory ..> WindowsCheckbox
+MacOSFactory ..> MacOSButton
+MacOSFactory ..> MacOSCheckbox
+
+DeliveryApplication ..> GUIFactory
+DeliveryApplication ..> Logistics
+
+@enduml
