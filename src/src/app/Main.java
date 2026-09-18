@@ -13,10 +13,18 @@ public class Main {
     public static void main(String[] args) {
         Scanner cs = new Scanner(System.in);
         System.out.println("Enter delivery mode (ROAD / SEA): ");
+        if (!cs.hasNextLine()) {
+            System.err.println("Error: No input stream available.");
+            System.exit(1);
+        }
         String mode = cs.nextLine().trim().toUpperCase();
 
         System.out.println("Enter UI platform (WINDOWS / MACOS)");
-        String platform = cs .nextLine().trim().toUpperCase();
+        if (!cs.hasNextLine()) {
+                System.err.println("Error: No input stream available.");
+                System.exit(1);
+        }
+        String platform = cs.nextLine().trim().toUpperCase();
 
         Logistics logistics;
         if (mode.equals("ROAD")){
@@ -24,7 +32,7 @@ public class Main {
         } else if (mode.equals("SEA")) {
             logistics = new SeaLogistics();
         } else {
-            System.out.println("Error: Invalid delivery mode: " + mode);
+            System.err.println("Error: Invalid delivery mode: " + mode);
             System.exit(1);
             return;
         }
@@ -35,7 +43,7 @@ public class Main {
         } else if (platform.equals("MACOS")) {
             guiFactory = new MacOSFactory();
         } else {
-            System.out.println("Error: Invalid UI platform: "+ platform);
+            System.err.println("Error: Invalid UI platform: "+ platform);
             System.exit(1);
             return;
         }
